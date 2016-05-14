@@ -64,27 +64,23 @@
 
   				</header>
 
+          <script type="text/template" id="gamma-photo">
+            <li>
+              <div data-alt="img03" data-max-width="1800" data-max-height="1350">
+                <div data-src="<%= currentUrl %>/gallery/CaroleRafa_<%= index %>-large.jpg" data-min-width="300"></div>
+                <div data-src="<%= currentUrl %>/gallery/CaroleRafa_<%= index %>-medium.jpg" data-min-width="200"></div>
+                <div data-src="<%= currentUrl %>/gallery/CaroleRafa_<%= index %>-small.jpg" data-min-width="140"></div>
+                <div data-src="<%= currentUrl %>/gallery/CaroleRafa_<%= index %>-xsmall.jpg"></div>
+                <noscript>
+                  <img src="<%= currentUrl %>/gallery/CaroleRafa_<%= index %>-xsmall.jpg" alt="img03"/>
+                </noscript>
+              </div>
+            </li>
+          </script>
+
   				<div class="gamma-container gamma-loading" id="gamma-container">
 
-  					<ul class="gamma-gallery">
-              <?php for ($index=1; $index < 781; $index ++) { ?>
-
-                <?php $currentURL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>
-
-                <li>
-                  <div data-alt="img03" data-max-width="1800" data-max-height="1350">
-                    <div data-src="<?php echo $currentURL ?>/gallery/CaroleRafa_<?php echo sprintf('%03d', $index); ?>-large.jpg" data-min-width="300"></div>
-                    <div data-src="<?php echo $currentURL ?>/gallery/CaroleRafa_<?php echo sprintf('%03d', $index); ?>-medium.jpg" data-min-width="200"></div>
-                    <div data-src="<?php echo $currentURL ?>/gallery/CaroleRafa_<?php echo sprintf('%03d', $index); ?>-small.jpg" data-min-width="140"></div>
-                    <div data-src="<?php echo $currentURL ?>/gallery/CaroleRafa_<?php echo sprintf('%03d', $index); ?>-xsmall.jpg"></div>
-                    <noscript>
-                      <img src="<?php echo $currentURL ?>/gallery/CaroleRafa_<?php echo sprintf('%02d', $index); ?>-xsmall.jpg" alt="img03"/>
-                    </noscript>
-                  </div>
-                </li>
-
-              <?php } ?>
-  					</ul>
+  					<ul class="gamma-gallery"></ul>
 
   					<div class="gamma-overlay"></div>
 
@@ -95,6 +91,7 @@
   			</div><!--/main-->
   		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="../bower_components/underscore/underscore.js"></script>
     <script src="../bower_components/PACE/pace.js"></script>
 		<script src="../bower_components/GammaGallery/js/jquery.masonry.min.js"></script>
 		<script src="../bower_components/GammaGallery/js/jquery.history.js"></script>
@@ -113,8 +110,27 @@
         });
     </script>
 		<script type="text/javascript">
+      function pad(num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length-size);
+      }
 
 			$(function() {
+
+        for (var index = 1; index <= 781; index++) {
+
+          console.log(index);
+
+          html = _.template($("#gamma-photo").html())({
+            index: pad(index, 3),
+            currentUrl: window.location.href.replace('index.html', '')
+          });
+
+          console.log(html, $('.gamma-gallery'));
+
+          $('.gamma-gallery').append(html);
+
+        }
 
 				var GammaSettings = {
 						// order is important!
