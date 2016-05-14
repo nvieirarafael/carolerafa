@@ -8,6 +8,10 @@
       <title>Galeria de Fotos</title>
 
       <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+      <link rel="stylesheet" type="text/css" href="../css/animate.css"/>
+
       <link rel="stylesheet" type="text/css" href="../bower_components/GammaGallery/css/style.css"/>
 
       <link href="../bower_components/PACE/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
@@ -33,6 +37,50 @@
         h1.scroll {
           position: absolute;
           top: 610px;
+        }
+
+        .more-photos {
+          position: absolute;
+          right: 50px;
+          bottom: 0px;
+        }
+
+        /*=================================
+         # 22. Footer Styles
+         =================================*/
+
+        footer {
+          background: url(../images/background-image/footer-bg.jpg) no-repeat center 70%;
+          text-align: center;
+        }
+
+        footer .overlay {
+          background: rgba(249,247,241,.7) none repeat scroll 0 0;
+        }
+
+        footer .footer_top {
+          padding: 45px 0;
+          margin-bottom: 3px;
+          border-bottom: 1px solid #D1D1D1;
+        }
+        footer .footer_bottom {
+          border-top: 1px solid #D1D1D1;
+        }
+        footer .footer_bottom p {
+          color: #262626;
+          margin-bottom: 0;
+          line-height: 65px;
+          font-weight: 600;
+        }
+        footer .footer_bottom p a {
+          color: #FF6767;
+          font-weight: 400px;
+        }
+
+        footer {
+          position: absolute;
+          width: 100%;
+          margin-top: 100px;
         }
 
       </style>
@@ -65,7 +113,7 @@
   				</header>
 
           <script type="text/template" id="gamma-photo">
-            <li>
+            <li class="wow fadeInUp">
               <div data-alt="img03" data-max-width="1800" data-max-height="1350">
                 <div data-src="<%= currentUrl %>/gallery/CaroleRafa_<%= index %>-large.jpg" data-min-width="300"></div>
                 <div data-src="<%= currentUrl %>/gallery/CaroleRafa_<%= index %>-medium.jpg" data-min-width="200"></div>
@@ -83,16 +131,35 @@
   					<ul class="gamma-gallery"></ul>
 
   					<div class="gamma-overlay"></div>
-
-  					<div id="loadmore" class="loadmore">Example for loading more items...</div>
-
   				</div>
 
   			</div><!--/main-->
   		</div>
+    <!-- footer -->
+    <footer>
+      <div class="overlay">
+        <div class="footer_top">
+          <div class="container">
+            <div class="row">
+              <img src="../images/logo/footer-logo.png" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="footer_bottom">
+          <div class="container">
+            <div class="row">
+              <p>
+                &copy; 2015 - Theme <a href="http://themeforest.net/item/wedding-day-wedding-html-template/10873238">Wedding Day</a> - Customizado por <a href="#">nvieirarafael</a> com <i style="color: rgb(255, 103, 103);" class="fa fa-heart fa-lg faa-pulse animated"></i>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer> <!-- /footer -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="../bower_components/underscore/underscore.js"></script>
     <script src="../bower_components/PACE/pace.js"></script>
+    <script src="../js/wow.min.js"></script>  <!-- WOW JS -->
 		<script src="../bower_components/GammaGallery/js/jquery.masonry.min.js"></script>
 		<script src="../bower_components/GammaGallery/js/jquery.history.js"></script>
 		<script src="../bower_components/GammaGallery/js/js-url.min.js"></script>
@@ -117,20 +184,53 @@
 
 			$(function() {
 
-        for (var index = 1; index <= 781; index++) {
+        pageNumber = 1;
+        itemsOnPage = 50;
+        photoNumber = 781;
+        lastPhotoIndex = 1;
 
-          console.log(index);
+        $template = $("#gamma-photo")
+        $gallery = $('.gamma-gallery')
 
-          html = _.template($("#gamma-photo").html())({
+        function appendPhoto(index) {
+          html = _.template($template.html())({
             index: pad(index, 3),
             currentUrl: window.location.href.replace('index.html', '')
           });
 
-          console.log(html, $('.gamma-gallery'));
-
-          $('.gamma-gallery').append(html);
-
+          if (pageNumber == 1) {
+            $gallery.append(html);
+          }
+          else {
+            Gamma.add($(html));
+          }
         }
+
+        function appendPage(pageNumber) {
+          showingPhotosNumber = (pageNumber * itemsOnPage);
+
+          if (pageNumber == 1) {
+            for (; lastPhotoIndex <= showingPhotosNumber; lastPhotoIndex++) {
+              if (lastPhotoIndex > photoNumber) {
+                continue;
+              }
+              appendPhoto(lastPhotoIndex);
+            }
+            return;
+          }
+
+          var interval = setInterval(function () {
+            if (lastPhotoIndex <= showingPhotosNumber && lastPhotoIndex <= photoNumber) {
+              appendPhoto(lastPhotoIndex);
+              lastPhotoIndex++;
+            } else {
+              clearInterval(interval);
+            }
+
+          }, 100);
+        }
+
+        appendPage(pageNumber);
 
 				var GammaSettings = {
 						// order is important!
@@ -152,34 +252,7 @@
 						} ]
 				};
 
-				Gamma.init( GammaSettings, fncallback );
-
-
-				// Example how to add more items (just a dummy):
-
-				var page = 0,
-					items = ['<li><div data-alt="img03" data-description="<h3>Sky high</h3>" data-max-width="1800" data-max-height="1350"><div data-src="../bower_components/GammaGallery/images/xxxlarge/3.jpg" data-min-width="1300"></div><div data-src="../bower_components/GammaGallery/images/xxlarge/3.jpg" data-min-width="1000"></div><div data-src="../bower_components/GammaGallery/images/xlarge/3.jpg" data-min-width="700"></div><div data-src="../bower_components/GammaGallery/images/large/3.jpg" data-min-width="300"></div><div data-src="../bower_components/GammaGallery/images/medium/3.jpg" data-min-width="200"></div><div data-src="../bower_components/GammaGallery/images/small/3.jpg" data-min-width="140"></div><div data-src="../bower_components/GammaGallery/images/xsmall/3.jpg"></div><noscript><img src="../bower_components/GammaGallery/images/xsmall/3.jpg" alt="img03"/></noscript></div></li><li><div data-alt="img03" data-description="<h3>Sky high</h3>" data-max-width="1800" data-max-height="1350"><div data-src="../bower_components/GammaGallery/images/xxxlarge/3.jpg" data-min-width="1300"></div><div data-src="../bower_components/GammaGallery/images/xxlarge/3.jpg" data-min-width="1000"></div><div data-src="../bower_components/GammaGallery/images/xlarge/3.jpg" data-min-width="700"></div><div data-src="../bower_components/GammaGallery/images/large/3.jpg" data-min-width="300"></div><div data-src="../bower_components/GammaGallery/images/medium/3.jpg" data-min-width="200"></div><div data-src="../bower_components/GammaGallery/images/small/3.jpg" data-min-width="140"></div><div data-src="../bower_components/GammaGallery/images/xsmall/3.jpg"></div><noscript><img src="../bower_components/GammaGallery/images/xsmall/3.jpg" alt="img03"/></noscript></div></li><li><div data-alt="img03" data-description="<h3>Sky high</h3>" data-max-width="1800" data-max-height="1350"><div data-src="../bower_components/GammaGallery/images/xxxlarge/3.jpg" data-min-width="1300"></div><div data-src="../bower_components/GammaGallery/images/xxlarge/3.jpg" data-min-width="1000"></div><div data-src="../bower_components/GammaGallery/images/xlarge/3.jpg" data-min-width="700"></div><div data-src="../bower_components/GammaGallery/images/large/3.jpg" data-min-width="300"></div><div data-src="../bower_components/GammaGallery/images/medium/3.jpg" data-min-width="200"></div><div data-src="../bower_components/GammaGallery/images/small/3.jpg" data-min-width="140"></div><div data-src="../bower_components/GammaGallery/images/xsmall/3.jpg"></div><noscript><img src="../bower_components/GammaGallery/images/xsmall/3.jpg" alt="img03"/></noscript></div></li><li><div data-alt="img03" data-description="<h3>Sky high</h3>" data-max-width="1800" data-max-height="1350"><div data-src="../bower_components/GammaGallery/images/xxxlarge/3.jpg" data-min-width="1300"></div><div data-src="../bower_components/GammaGallery/images/xxlarge/3.jpg" data-min-width="1000"></div><div data-src="../bower_components/GammaGallery/images/xlarge/3.jpg" data-min-width="700"></div><div data-src="../bower_components/GammaGallery/images/large/3.jpg" data-min-width="300"></div><div data-src="../bower_components/GammaGallery/images/medium/3.jpg" data-min-width="200"></div><div data-src="../bower_components/GammaGallery/images/small/3.jpg" data-min-width="140"></div><div data-src="../bower_components/GammaGallery/images/xsmall/3.jpg"></div><noscript><img src="../bower_components/GammaGallery/images/xsmall/3.jpg" alt="img03"/></noscript></div></li><li><div data-alt="img03" data-description="<h3>Sky high</h3>" data-max-width="1800" data-max-height="1350"><div data-src="../bower_components/GammaGallery/images/xxxlarge/3.jpg" data-min-width="1300"></div><div data-src="../bower_components/GammaGallery/images/xxlarge/3.jpg" data-min-width="1000"></div><div data-src="../bower_components/GammaGallery/images/xlarge/3.jpg" data-min-width="700"></div><div data-src="../bower_components/GammaGallery/images/large/3.jpg" data-min-width="300"></div><div data-src="../bower_components/GammaGallery/images/medium/3.jpg" data-min-width="200"></div><div data-src="../bower_components/GammaGallery/images/small/3.jpg" data-min-width="140"></div><div data-src="../bower_components/GammaGallery/images/xsmall/3.jpg"></div><noscript><img src="../bower_components/GammaGallery/images/xsmall/3.jpg" alt="img03"/></noscript></div></li>']
-
-				function fncallback() {
-
-					$( '#loadmore' ).show().on( 'click', function() {
-
-						++page;
-						var newitems = items[page-1]
-						if( page <= 1 ) {
-
-							Gamma.add( $( newitems ) );
-
-						}
-						if( page === 1 ) {
-
-							$( this ).remove();
-
-						}
-
-					} );
-
-				}
+				Gamma.init(GammaSettings);
 
         $(window).scroll(function (e) {
           if (window.pageYOffset > 580) {
@@ -193,10 +266,16 @@
 
           var newVolumn = 1 - (0.0017 * window.pageYOffset);
 
-          if (newVolumn > 0) {
+          if (newVolumn > 0.1) {
             $("video").prop("volume", newVolumn);
           } else {
-            $("video").prop("volume", 0);
+            $("video").prop("volume", 0.1);
+          }
+
+          if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+            // $(window).unbind('scroll');
+            pageNumber += 1;
+            appendPage(pageNumber);
           }
 
         });
@@ -206,6 +285,8 @@
           showCursor: false,
 
         });
+
+        new WOW().init();
 
 			});
 
