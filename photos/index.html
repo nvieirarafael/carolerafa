@@ -16,6 +16,9 @@
 
       <link href="../bower_components/PACE/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
 
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../bower_components/font-awesome-animation/dist/font-awesome-animation.css">
+
       <script src="../bower_components/GammaGallery/js/modernizr.custom.70736.js"></script>
 		  <noscript>
         <link rel="stylesheet" type="text/css" href="../bower_components/GammaGallery/css/noJS.css"/>
@@ -50,24 +53,25 @@
          =================================*/
 
         footer {
-          background: url(../images/background-image/footer-bg.jpg) no-repeat center 70%;
+          background: url(../images/background-image/footer-bg-dark.jpg) no-repeat center 70%;
           text-align: center;
         }
 
         footer .overlay {
-          background: rgba(249,247,241,.7) none repeat scroll 0 0;
+          background: rgba(0, 0, 0, 0.4) none repeat scroll 0 0;
         }
 
         footer .footer_top {
           padding: 45px 0;
           margin-bottom: 3px;
+          border-top: 1px solid #2D2D2D;
           border-bottom: 1px solid #D1D1D1;
         }
         footer .footer_bottom {
-          border-top: 1px solid #D1D1D1;
+          background: rgba(46, 32, 17, 0.9);
         }
         footer .footer_bottom p {
-          color: #262626;
+          color: #D1D1D1;
           margin-bottom: 0;
           line-height: 65px;
           font-weight: 600;
@@ -82,6 +86,18 @@
           width: 100%;
           margin-top: 100px;
         }
+
+        .popover {
+          background-color: #333;
+        }
+
+        .popover-title {
+          font-weight: bold;
+          background-color: #FF6767;
+          border-bottom: 0px;
+          font-size: 14px;
+        }
+
 
       </style>
 
@@ -106,7 +122,7 @@
               </span>
   					</div>
 
-            <br><br><br><br><br><br><br>
+            <br><br><br><br>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
@@ -141,23 +157,59 @@
         <div class="footer_top">
           <div class="container">
             <div class="row">
-              <img src="../images/logo/footer-logo.png" alt="">
+              <img src="../images/logo/footer-logo-light.png" alt="">
             </div>
           </div>
         </div>
         <div class="footer_bottom">
           <div class="container">
             <div class="row">
+              <br>
               <p>
-                &copy; 2015 - Theme <a href="http://themeforest.net/item/wedding-day-wedding-html-template/10873238">Wedding Day</a> - Customizado por <a href="#">nvieirarafael</a> com <i style="color: rgb(255, 103, 103);" class="fa fa-heart fa-lg faa-pulse animated"></i>
+                <a target="_blank" href="http://oficinadaphoto.com/">
+                  <img src="../images/logo/oficinadaphoto.png">
+                </a>
+                <a target="_blank" href="http://www.singularfilms.com.br/">
+                  <img src="../images/logo/singular-films.png">
+                </a>
+              </p>
+              <script id="frameworks" type="text/template">
+                <ul class="fa-ul">
+                  <li>
+                    <i class="fa-li fa fa-file-code-o"></i>
+                    <a href="http://tympanus.net/codrops/2012/11/06/gamma-gallery-a-responsive-image-gallery-experiment/">GammaGallery</a>
+                  </li>
+                  <li><i class="fa-li fa fa-thumbs-o-up"></i><a href="https://jquery.com/">JQuery</a></li>
+                  <li><i class="fa-li fa fa-thumbs-o-up"></i><a href="http://underscorejs.org/">underscorejs</a></li>
+                  <li><i class="fa-li fa fa-thumbs-o-up"></i><a href="http://github.hubspot.com/pace/docs/welcome/">PACE</a></li>
+                  <li><i class="fa-li fa fa-thumbs-o-up"></i><a href="http://mynameismatthieu.com/WOW/">wow</a></li>
+                  <li><i class="fa-li fa fa-thumbs-o-up"></i><a href="http://fontawesome.io/">font awesome</a></li>
+                  <li><i class="fa-li fa fa-thumbs-o-up"></i><a href="https://daneden.github.io/animate.css/">animate.css</a></li>
+                  <li><i class="fa-li fa fa-thumbs-o-up"></i><a href="https://github.com/mattboldt/typed.js/">typed</a></li>
+                  <li><i class="fa-li fa fa-thumbs-o-up"></i><a href="http://vodkabears.github.io/vide/">Vide</a></li>
+                </ul>
+              </script>
+              <p>
+                &copy; 2016 - Desenvolvido por <a href="#">nvieirarafael</a> com
+                <i data-toggle="popover"
+                   style="
+                      color: rgb(255, 103, 103);
+                      font-size: 14px;
+                      position: relative;
+                      overflow: visible;
+                      left: 10px;
+                      cursor: pointer;
+                   "
+                   class="fa fa-heart faa-pulse animated"></i>
               </p>
             </div>
           </div>
         </div>
       </div>
     </footer> <!-- /footer -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/underscore/underscore.js"></script>
+    <script src="../js/bootstrap.min.js"></script> <!-- bootstrap -->
     <script src="../bower_components/PACE/pace.js"></script>
     <script src="../js/wow.min.js"></script>  <!-- WOW JS -->
 		<script src="../bower_components/GammaGallery/js/jquery.masonry.min.js"></script>
@@ -184,8 +236,16 @@
 
 			$(function() {
 
+        $("[data-toggle='popover']").popover({
+          placement: 'top',
+          trigger: 'click',
+          html: true,
+          title: "E claro... Algumas ferramentas...",
+          content: _.template($("#frameworks").html())()
+        })
+
         pageNumber = 1;
-        itemsOnPage = 10;
+        itemsOnPage = 781;
         photoNumber = 781;
         lastPhotoIndex = 1;
 
@@ -198,36 +258,18 @@
             currentUrl: window.location.href.replace('index.html', '')
           });
 
-          if (pageNumber == 1) {
-            $gallery.append(html);
-          }
-          else {
-            Gamma.add($(html));
-          }
+          $gallery.append(html);
         }
 
         function appendPage(pageNumber) {
           showingPhotosNumber = (pageNumber * itemsOnPage);
 
-          if (pageNumber == 1) {
-            for (; lastPhotoIndex <= showingPhotosNumber; lastPhotoIndex++) {
-              if (lastPhotoIndex > photoNumber) {
-                continue;
-              }
-              appendPhoto(lastPhotoIndex);
+          for (; lastPhotoIndex <= showingPhotosNumber; lastPhotoIndex++) {
+            if (lastPhotoIndex > photoNumber) {
+              continue;
             }
-            return;
+            appendPhoto(lastPhotoIndex);
           }
-
-          var interval = setInterval(function () {
-            if (lastPhotoIndex <= showingPhotosNumber && lastPhotoIndex <= photoNumber) {
-              appendPhoto(lastPhotoIndex);
-              lastPhotoIndex++;
-            } else {
-              clearInterval(interval);
-            }
-
-          }, 100);
         }
 
         appendPage(pageNumber);
@@ -272,17 +314,12 @@
             $("video").prop("volume", 0.1);
           }
 
-          if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-            // $(window).unbind('scroll');
-            pageNumber += 1;
-            appendPage(pageNumber);
-          }
-
         });
 
         $("#typed").typed({
-          strings: ['Um dia muito especial em nossas vidas...'],
+          strings: ['Um dia muito especial em nossas vidas...', '2 Coríntios 4:15'],
           showCursor: false,
+          backDelay: 5000,
 
         });
 
