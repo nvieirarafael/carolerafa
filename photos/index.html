@@ -30,6 +30,7 @@
           color: #bfbfbf;
           text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
           position: fixed;
+          font-weight: bold;
         }
 
         h1.header-fixed:hover {
@@ -46,6 +47,10 @@
           position: absolute;
           right: 50px;
           bottom: 0px;
+        }
+
+        .gamma-container {
+          margin-top: 50%;
         }
 
         /*=================================
@@ -103,10 +108,21 @@
 
     </head>
     <body>
+
       <div class="container">
         <div style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%"
              data-vide-bg="../video/carolerafa"
              data-vide-options="position: 0% 0%, muted: false">
+        </div>
+
+        <img class="visible-xs-block" style="height: 100%; position: fixed; left: -15px;"
+             src="../images/background-image/phone-bg.jpg">
+
+        <div id='better-experience-message' class="visible-xs-block text-center wow fadeInUp"
+              style="position: absolute; top: 240px; left: 0px; width: 100%;">
+          <div class="label label-primary" style="font-size: 14px;">
+            Veja este site em um computador. Para uma melhor experiência.
+          </div>
         </div>
 
 		    <div class="main">
@@ -121,10 +137,6 @@
                 Tente acessar esta página com <a href="https://www.google.com.br/chrome/browser/desktop/">este</a>.
               </span>
   					</div>
-
-            <br><br><br><br>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
   				</header>
 
@@ -325,6 +337,11 @@
           backDelay: 5000,
 
         });
+
+        setTimeout(function () {
+          $('#better-experience-message').addClass('hidden');
+
+        }, 10000);
 
         new WOW().init();
 
