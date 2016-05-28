@@ -107,6 +107,17 @@
           font-size: 14px;
         }
 
+        @media (max-width: 767px) {
+          .orientation-rule {
+            width: 120%;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .orientation-rule {
+            height: 120%;
+          }
+        }
 
       </style>
 
@@ -119,7 +130,7 @@
              data-vide-options="position: 0% 0%, muted: false">
         </div>
 
-        <img class="visible-xs-block" style="height: 100%; position: fixed; left: -15px;"
+        <img class="visible-xs-block orientation-rule" style="position: fixed; left: -15px;"
              src="../images/background-image/phone-bg.jpg">
 
         <div id='better-experience-message' class="visible-xs-block text-center wow fadeInUp"
